@@ -86,6 +86,7 @@ function retrieveTargetInformation(queryParameter){
     return queryParameter.substring(7 /* length of "target(" */, queryParameter.length-1 /* cut off the trailing ")" */)
 }
 
+//http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.split(search).join(replacement);
