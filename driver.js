@@ -11,7 +11,7 @@ var moreMultipleForwardSlashesAndBracketsUrl = 'https://onedrive.live.com/edit.a
 var goodLink = 'https://onedrive.live.com/edit.aspx?cid=7d4ca48ab71fa43a&id=documents&resid=7D4CA48AB71FA43A!1002&app=OneNote&&wd=target%28%2F%2FTypescript%20Definition%20Files.one%7C865d0e84-d32b-44c4-8b2c-e746e460ce8a%2FExample%20Javascript%20Library%20%28OneNote%20Deep%20Link%5C%29%7Ceea62e68-1529-4eec-83cf-08c4498c4b96%2F%29';
 var dotoneinsectionnameurl = 'https://onedrive.live.com/edit.aspx?cid=7d4ca48ab71fa43a&id=documents&resid=7D4CA48AB71FA43A!1002&app=OneNote&&wd=target%28%2F%2Ft.one.two.three.one%7C3cd6ec7a-e49b-4bc1-bfb3-57af7865a046%2F.one.two.two%7C68ec67a4-2345-433d-9150-1bd51d80b463%2F%29';
 var validsharepointurl = 'https://msft.spoppe.com/teams/onenote/_layouts/15/WopiFrame.aspx?sourcedoc={ea3d1219-b013-4a19-b301-bfdea52eb922}&action=edit&wd=target%28%2F%2FOCE%2FData%20and%20Examples.one%7Cf5107145-d77a-481e-ac3d-17e60ea89af7%2FKusto%20Queries%7C5a485da3-1c7c-4833-ab29-f77ab60dcea2%2F%29';
-
+var anotherValidOneDriveLink = 'https://onedrive.live.com/edit.aspx?cid=7d4ca48ab71fa43a&id=documents&resid=7D4CA48AB71FA43A!1002&app=OneNote&&wd=target%28%2F%2FTypescript%20Definition%20Files.one%7C865d0e84-d32b-44c4-8b2c-e746e460ce8a%2FRoadmap%7Cb32b75bb-693a-4fce-872e-19b7681f7e0c%2F%29';
 function verify(testcase, url, expectedOutcome) {
     var parsed, sectionNameMatches, sectionIdMatches, pageNameMatches, pageIdMatches;
 
@@ -105,8 +105,15 @@ verify('dotoneinsectionnameurl', dotoneinsectionnameurl, {
 });
 
 verify('validsharepointurl', validsharepointurl, {
-    sectionName : 'OCE/Data and Examples',
+    sectionName : 'Data and Examples',
     sectionId : 'f5107145-d77a-481e-ac3d-17e60ea89af7',
     pageName : 'Kusto Queries',
     pageId : '5a485da3-1c7c-4833-ab29-f77ab60dcea2'
+});
+
+verify('anotherValidOneDriveLink', anotherValidOneDriveLink, {
+    sectionName : 'Typescript Definition Files',
+    sectionId : '865d0e84-d32b-44c4-8b2c-e746e460ce8a',
+    pageName : 'Roadmap',
+    pageId : 'b32b75bb-693a-4fce-872e-19b7681f7e0c'
 });

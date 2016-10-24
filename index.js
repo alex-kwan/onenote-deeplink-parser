@@ -39,6 +39,7 @@ function parse(url) {
         afterSectionDelimiter,
         targetInfoLength,
         sectionGuid,
+        sectionGroupNames,
         sectionName,
         pageName,
         pageId;
@@ -49,6 +50,7 @@ function parse(url) {
     if (url === "undefined" || url === null) {
         return {
             isValidUrl : false,
+            sectionGroupNames : [],
             sectionName : null,
             sectionId : null,
             pageName : null,
@@ -63,6 +65,7 @@ function parse(url) {
     if (wd === "undefined" || wd === null || !isTarget(wd)) {
         return {
             isValidUrl : false,
+            sectionGroupNames : [],
             sectionName : null,
             sectionId : null,
             pageName : null,
@@ -83,12 +86,17 @@ function parse(url) {
         sectionGuid = targetInfo.substring(afterSectionDelimiter, afterSectionDelimiter + guidLength);
 
         // format for section name in target string \\<sectionname>.one
-        sectionName = targetInfo.substring(2, sectionDelimiterPosition - 4);
+        sectionName = targetInfo.substring(2, sectionDelimiterPosition - 4).split('/');
+        sectionGroupNames = sectionName.slice(0, sectionName.length - 1);
+        sectionName = sectionName[sectionName.length -1];
+
         pageName = targetInfo.substring(afterSectionDelimiter + guidLength + pageDelimiterLength, targetInfoLength - guidLength - pageDelimiterLength);
+       
         pageId = targetInfo.substring(targetInfoLength - guidLength, targetInfoLength);
 
         return {
             isValidUrl : true,
+            sectionGroupNames : sectionGroupNames,
             sectionName : sectionName.replaceAll('\\', ''),
             sectionId : sectionGuid,
             pageName : pageName.replaceAll('\\', ''),
@@ -99,6 +107,7 @@ function parse(url) {
     } catch (e) {
         return {
             isValidUrl : false,
+            sectionGroupNames : [],
             sectionName : null,
             sectionId : null,
             pageName : null,
