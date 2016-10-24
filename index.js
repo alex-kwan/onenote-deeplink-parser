@@ -28,17 +28,17 @@ function parse(url){
 
    var targetInfo = retrieveTargetInformation(wd)
     
+    // Section names can't contain any of the following characters: ~ # % & ( { } | \ : " < > ? / ^
     try {
-        var sectionDelimiterPosition = targetInfo.indexOf(".one|");
-        var sectionDelimiterLength = 5;
-        var afterSectionLimiter = sectionDelimiterPosition + sectionDelimiterLength;
+        var sectionDelimiterPosition = targetInfo.indexOf("|");
+        var afterSectionDelimiter = sectionDelimiterPosition + 1;
         var pageDelimiterLength = 1;
         var guidLength = 36
         var targetInfoLength = targetInfo.length - 1
 
-        var sectionGuid = targetInfo.substring(afterSectionLimiter , afterSectionLimiter + guidLength)
-        var sectionName = targetInfo.substring(2 /* \\ */, sectionDelimiterPosition)
-        var pageName = targetInfo.substring(afterSectionLimiter + guidLength + pageDelimiterLength, targetInfoLength-guidLength - 1);
+        var sectionGuid = targetInfo.substring(afterSectionDelimiter , afterSectionDelimiter + guidLength)
+        var sectionName = targetInfo.substring(2 /* \\ */, sectionDelimiterPosition - 4 /* .one */)
+        var pageName = targetInfo.substring(afterSectionDelimiter + guidLength + pageDelimiterLength, targetInfoLength-guidLength - pageDelimiterLength);
         var pageId = targetInfo.substring(targetInfoLength - guidLength, targetInfoLength)
 
         return {
@@ -53,7 +53,7 @@ function parse(url){
     }
     catch(e){
         return {
-           isValidUrl : true,
+           isValidUrl : false,
            sectionName : null,
            sectionId : null,
            pageName : null,
