@@ -10,7 +10,7 @@
     "onenote",
     "deeplink"
   ],
-  "author": "Alex Kwan <alexkwan0892gmail.com>",
+  "author": "Alex Kwan <alexkwan089@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "jasmine": "^2.5.2"
