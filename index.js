@@ -55,7 +55,6 @@ function parse(url) {
       sectionId: null,
       pageName: null,
       pageId: null,
-      url: url,
       reason: 'url was null or undefined',
     };
   }
@@ -70,7 +69,6 @@ function parse(url) {
       sectionId: null,
       pageName: null,
       pageId: null,
-      url: url,
       reason: 'there was no wd parameter or it did not contain a target',
     };
   }
@@ -91,7 +89,6 @@ function parse(url) {
         sectionId: null,
         pageName: null,
         pageId: null,
-        url: url,
         reason: 'deeplink did not contain delimiter between section and page info',
       };
     }
@@ -125,7 +122,6 @@ function parse(url) {
       sectionId: sectionGuid,
       pageName: pageName.replaceAll('\\', ''),
       pageId: pageId,
-      url: url,
       reason: 'success',
     };
   } catch (e) {
@@ -136,7 +132,6 @@ function parse(url) {
       sectionId: null,
       pageName: null,
       pageId: null,
-      url: url,
       reason: 'unable to parse url : expected format( <sectionname>.one|<guid>/<pagename>|<guid )',
     };
   }
