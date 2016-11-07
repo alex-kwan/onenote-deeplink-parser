@@ -1,5 +1,4 @@
 "use strict";
-var sprintf = require('sprintf-js').sprintf;
 var parser = require('./index.js');
 
 var baseUrl = 'https://onedrive.live.com/edit.aspx?cid=1a1aa11aa11aa11a&id=documents&resid=1A1AA11AA11AA11A!111&app=OneNote'

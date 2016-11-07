@@ -13,7 +13,6 @@
   "author": "Alex Kwan <alexkwan0892gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "jasmine": "^2.5.2",
-    "sprintf-js": "^1.0.3"
+    "jasmine": "^2.5.2"
   }
 }
