@@ -78,17 +78,38 @@ function parse(url) {
   targetInfo = retrieveTargetInformation(wd);
 
   // Section names can't contain any of the following characters: ~ # % & ( { } | \ : " < > ? / ^
+  // this suggests the first time we see a '|', we are able to determine what is section info
+  // and what is page info
   try {
     sectionDelimiterPosition = targetInfo.indexOf('|');
+
+    if (sectionDelimiterPosition == -1) {
+      return {
+        isValidUrl: false,
+        sectionGroupNames: [],
+        sectionName: null,
+        sectionId: null,
+        pageName: null,
+        pageId: null,
+        url: url,
+        reason: 'deeplink did not contain delimiter between section and page info',
+      };
+    }
+
     afterSectionDelimiter = sectionDelimiterPosition + 1;
-    targetInfoLength = targetInfo.length - 1;
 
     sectionGuid = targetInfo.substring(afterSectionDelimiter, afterSectionDelimiter + guidLength);
 
     // format for section name in target string \\<sectionname>.one
     sectionName = targetInfo.substring(2, sectionDelimiterPosition - 4).split('/');
+
+    // the section name can actually "contain" the section group names as well
     sectionGroupNames = sectionName.slice(0, sectionName.length - 1);
+
+    // we know it will always be the last element if we split the section by '/'
     sectionName = sectionName[sectionName.length - 1];
+
+    targetInfoLength = targetInfo.length - 1;
 
     pageName = targetInfo.substring(
       afterSectionDelimiter + guidLength + pageDelimiterLength,
