@@ -1,11 +1,6 @@
 'use strict';
 
 var parser = require('../index.js');
-// var jasmine = require('jasmine');
-
-// var describe = jasmine.describe;
-// var it = jasmine.it;
-// var expect = jasmine.expect;
 
 describe("onenote invalid deeplinks", function () {
     describe("parsing no link", function () {
