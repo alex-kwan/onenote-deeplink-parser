@@ -1,0 +1,18 @@
+{
+  "name": "onenote-deeplink-parser",
+  "description": "Parse information out of OneNote deep link",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "keywords": [
+    "onenote",
+    "deeplink"
+  ],
+  "author": "Alex Kwan <alexkwan0892gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^2.5.2"
+  }
+}
