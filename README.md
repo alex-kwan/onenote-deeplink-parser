@@ -1,2 +1,2 @@
 # onenote-deeplink-parser
-Parse information out of OneNote deep link
+Parse information out of OneNote web deep link

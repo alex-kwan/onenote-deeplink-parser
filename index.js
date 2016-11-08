@@ -1,5 +1,7 @@
 'use strict';
 
+var wdparamregex = /(^target\()\/\/(.*)(.one\|)([0-9a-fA-F]{8}\-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})(\/)(.*)(\|)([0-9a-fA-F]{8}\-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})\/(\)$)/;
+
 function GetErrorResponse(message) {
     return {
         isValidUrl: false,
@@ -11,6 +13,7 @@ function GetErrorResponse(message) {
         reason: message,
     };
 }
+
 // retrieves query parameters by name
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
 function getParameterByName(name, url) {
@@ -28,15 +31,6 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-function isTarget(queryParameter) {
-    return queryParameter.startsWith('target(') && queryParameter.endsWith(')');
-}
-
-function retrieveTargetInformation(queryParameter) {
-    // format of target query parameter   target(<targetinfo>)
-    return queryParameter.substring(7, queryParameter.length - 1);
-}
-
 //http://stackoverflow.com/questions/1144783/replacing-all-occurrences-of-a-string-in-javascript
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
@@ -44,13 +38,8 @@ String.prototype.replaceAll = function (search, replacement) {
 };
 
 function parse(url) {
-    var pageDelimiterLength = 1,
-        guidLength = 36,
-        wd,
+    var wd,
         targetInfo,
-        sectionDelimiterPosition,
-        afterSectionDelimiter,
-        targetInfoLength,
         sectionGuid,
         sectionGroupNames,
         sectionName,
@@ -64,43 +53,24 @@ function parse(url) {
 
     wd = getParameterByName('wd', url);
 
-    if (wd === 'undefined' || wd === null || !isTarget(wd)) {
+    if (wd === 'undefined' || wd === null) {
         return new GetErrorResponse('there was no wd parameter or it did not contain a target');
     }
-
-    targetInfo = retrieveTargetInformation(wd);
-
+    
+    if(!wdparamregex.test(wd)){
+        return new GetErrorResponse('wd parameter does not fit expected format');
+    }
+    
     // Section names can't contain any of the following characters: ~ # % & ( { } | \ : " < > ? / ^
     // this suggests the first time we see a '|', we are able to determine what is section info
     // and what is page info
     try {
-        sectionDelimiterPosition = targetInfo.indexOf('|');
-
-        if (sectionDelimiterPosition === -1) {
-            return new GetErrorResponse('deeplink did not contain delimiter between section and page info');
-        }
-
-        afterSectionDelimiter = sectionDelimiterPosition + 1;
-
-        sectionGuid = targetInfo.substring(afterSectionDelimiter, afterSectionDelimiter + guidLength);
-
-        // format for section name in target string \\<sectionname>.one
-        sectionName = targetInfo.substring(2, sectionDelimiterPosition - 4).split('/');
-
-        // the section name can actually "contain" the section group names as well
+        sectionName = wd.match(wdparamregex)[2].split('/');
         sectionGroupNames = sectionName.slice(0, sectionName.length - 1);
-
-        // we know it will always be the last element if we split the section by '/'
+        sectionGuid = wd.match(wdparamregex)[4];
         sectionName = sectionName[sectionName.length - 1];
-
-        targetInfoLength = targetInfo.length - 1;
-
-        pageName = targetInfo.substring(
-            afterSectionDelimiter + guidLength + pageDelimiterLength,
-            targetInfoLength - guidLength - pageDelimiterLength
-        );
-
-        pageId = targetInfo.substring(targetInfoLength - guidLength, targetInfoLength);
+        pageName = wd.match(wdparamregex)[6]
+        pageId = wd.match(wdparamregex)[8]
 
         return {
             isValidUrl: true,

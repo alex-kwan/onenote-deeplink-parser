@@ -47,10 +47,10 @@ describe("onenote valid deeplinks", function () {
         });
 
         it("parsing sharepoint link with section groups", function () {
-            var sharepointLink = 'https://sharepointonline.com/teams/teamawesome/_layouts/15/WopiFrame.aspx?sourcedoc={ea3d1219-b013-4a19-b301-bfdea52eb922}&action=edit&wd=target%28%2F%2AAA%2FAAA%2FAAAA%2FAAA.one%7C111a1a11-a11a-11a1-1a1a-a111a111aa1a%2FBBB%7C111a11aa-111a-1aaa-111a-11a1111a1a1a%2F%29',
+            var sharepointLink = 'https://sharepointonline.com/teams/teamawesome/_layouts/15/WopiFrame.aspx?sourcedoc={ea3d1219-b013-4a19-b301-bfdea52eb922}&action=edit&wd=target%28%2F%2FAAA%2FAAA%2FAAAA%2FAAA.one%7C111a1a11-a11a-11a1-1a1a-a111a111aa1a%2FBBB%7C111a11aa-111a-1aaa-111a-11a1111a1a1a%2F%29',
                 result = parser(sharepointLink);
             expect(result.isValidUrl).toBe(true);
-            expect(result.sectionGroupNames).toEqual(['AA', 'AAA', 'AAAA']);
+            expect(result.sectionGroupNames).toEqual(['AAA', 'AAA', 'AAAA']);
             expect(result.sectionName).toBe(expectedSectionName);
             expect(result.sectionId).toBe(expectedSectionId);
             expect(result.pageName).toBe(expectedPageName);
