@@ -1,7 +1,7 @@
 {
   "name": "onenote-deeplink-parser",
   "description": "Parse information out of OneNote deep link",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "test": "node test"
