@@ -1,6 +1,7 @@
 'use strict';
 
-var wdparamregex = /(^target\()\/\/(.*)(.one\|)([0-9a-fA-F]{8}\-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})(\/)(.*)(\|)([0-9a-fA-F]{8}\-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})\/(\)$)/;
+// awesome website https://regex101.com
+var wdparamregex = /(^target\()(.*)(.one\|)([0-9a-fA-F]{8}\-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})(\/)(.*)(\|)([0-9a-fA-F]{8}\-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})\/(\)$)/;
 
 function GetErrorResponse(message) {
     return {
@@ -57,6 +58,8 @@ function parse(url) {
         return new GetErrorResponse('there was no wd parameter or it did not contain a target');
     }
     
+    wd = decodeURIComponent(wd);
+
     if(!wdparamregex.test(wd)){
         return new GetErrorResponse('wd parameter does not fit expected format');
     }
